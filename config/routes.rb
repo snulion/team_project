@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'home/index'
 <<<<<<< HEAD
-  
+
 =======
   root 'home#index'
   get 'home/recorder'
