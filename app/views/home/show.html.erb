@@ -1,7 +1,9 @@
+
 <div class="container">
   <div class="row">
     <div class="col s12 m6">
       <% @show.each do |s| %>
+      <%= @orange %>
       <div class="card">
         <div class="card-image">
           <img src=<%= asset_path("hiphop.png") %>>
@@ -27,6 +29,7 @@
         <div class="card-content">
           <% s.comments.each do |c| %>
             <%= c.title %><br>
+            <%= @orange %>
             <%= c.content %><br>
             <%= c.writer %><br>
             <%= c.created_at.in_time_zone("Asia/Seoul").strftime("%Y년%m월%d일 %H시%M분") %><hr>
