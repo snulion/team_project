@@ -1,0 +1,6 @@
+<% show.each do |c| %>
+  <%= c.title %><br>
+  <%= c.content %><br>
+  <%= c.writer %><br>
+  <%= c.created_at.in_time_zone("Asia/Seoul").strftime("%Y년%m월%d일 %H시%M분") %><hr>
+<% end %>

@@ -34,6 +34,7 @@ class HomeController < ApplicationController
     if user_signed_in?
       post_id = params[:id]
       @show = Post.where(id: post_id)
+      @comment = @show.take.comments.reverse
     else
       redirect_to "/users/sign_in"
     end
@@ -47,6 +48,10 @@ class HomeController < ApplicationController
     reply = Comment.new(title: title, content: content, post_id: postid, writer: current_user.email)
     reply.save
     
-    redirect_to :back
+    respond_to do |format|
+      format.js
+    end
+    
+    # redirect_to :back
   end
 end

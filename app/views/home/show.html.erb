@@ -17,15 +17,21 @@
           <p class="card-like">좋아요</p>
         </div>
         <div class="card-content">
-          <form action="/home/comment" method="POST">
-            <input type="hidden" name="postid" value="<%= s.id %>"/>
-            <input type="text" class="materialize-text" name="title" placeholder="곡 제목"/>
-            <textarea id="textarea2" class="materialize-textarea" name="content"></textarea>
-            <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
-          </form>
+          <%= form_tag("/home/comment", method: "POST", remote: true) do %>
+            <%= hidden_field_tag 'postid', s.id %>
+            <%= text_field_tag 'title', nil, class: 'materialize-text', placeholder: '곡 제목' %>
+            <%= text_area_tag 'content', nil,  class: 'materialize-textarea' %>
+            <%= button_tag 'Submit', class: 'btn waves-effect waves-light' %>
+          <% end %>
+          <!--<form action="/home/comment" method="POST">-->
+          <!--  <input type="hidden" name="postid" value="<%= s.id %>"/>-->
+          <!--  <input type="text" class="materialize-text" name="title" placeholder="곡 제목"/>-->
+          <!--  <textarea id="textarea2" class="materialize-textarea" name="content"></textarea>-->
+          <!--  <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>-->
+          <!--</form>-->
         </div>
-        <div class="card-content">
-          <% s.comments.each do |c| %>
+        <div id="comment" class="card-content">
+          <% s.comments.reverse.each do |c| %>
             <%= c.title %><br>
             <%= c.content %><br>
             <%= c.writer %><br>
