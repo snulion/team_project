@@ -1,0 +1,3 @@
+$("#like_" + <%= @post_id %>).html(
+    "<%= escape_javascript(render partial: 'home/like_count', locals: { count: @count, postid: @post_id }) %>"
+);

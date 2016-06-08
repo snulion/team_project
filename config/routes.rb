@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'home/recorder'
   get 'home/index'
   get 'home/show/:id' => 'home#show'
+  get 'home/like'
   
   post 'home/post'
   post 'home/comment'

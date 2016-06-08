@@ -1,43 +1,29 @@
 <div class="container">
-    <div class="row">
-        <% @posts.each do |p| %>
-        <div class="col s12 m6">
-            <div class="card" style="cursor:pointer" onclick="location.href='/home/show/<%= p.id %>'">
-                <div class="card-image">
-                    <img src=<%= asset_path("hiphop.png") %>>
-                    <input type="hidden" id="post_id" name="post_id" value="<%= p.id %>"/>
-                    <span class="card-title"><%= p.genre %></span>
-                    <span class="card-date"><%= p.created_at.in_time_zone("Asia/Seoul").strftime("%Y년%m월%d일 %H시%M분") %></span>
-                </div>
-                <div class="card-content">
-                    <p><%= p.content %></p>
-                </div>
-                <div class="card-action">
-                    <a href="#">This is a link</a>
-                    <p class="card-difficulty">☆☆☆★★</p>
-                    <p class="card-like">좋아요</p>
-                </div>
-            </div>
+  <div class="row">
+    <% @posts.each do |p| %>
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-image" style="cursor:pointer" onclick="location.href='/home/show/<%= p.id %>'">
+          <img src=<%= asset_path("hiphop.png") %>>
+          <input type="hidden" id="post_id" name="post_id" value="<%= p.id %>"/>
+          <span class="card-title"><%= p.genre %></span>
+          <span class="card-date"><%= p.created_at.in_time_zone("Asia/Seoul").strftime("%Y년%m월%d일 %H시%M분") %></span>
         </div>
-        <% end %>
+        <div class="card-content">
+          <p><%= p.content %></p>
+        </div>
+        <div class="card-action">
+          <!-- "home_like_path() : route.rb에 먼저 경로가 지정되어 있어야 한다. -->
+          <!-- 좋아요를 이미 눌렀다면 "좋아요 취소 n명"으로 나타난다. -->
+          <% if Like.where(user_id: current_user.id, post_id: p.id).empty? %>
+            <%= link_to "좋아요 #{p.members.count}명", home_like_path(post_id: p.id), id: "like_#{p.id}", remote: true %>
+          <% else %>
+            <%= link_to "좋아요 취소 #{p.members.count}명", home_like_path(post_id: p.id), id: "like_#{p.id}", remote: true %>
+          <% end %>
+          <p class="card-difficulty">☆☆☆★★</p>
+        </div>
+      </div>
     </div>
+    <% end %>
+  </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $(document).on("click", ".card-like", function() {
-            var postid = $("#post_id").val();
-            $.ajax({
-                method: "POST",
-                url: "/home/like",
-                data: { like_user: "1", post_id: postid },
-                success: function(data) {
-                    alert("success!!")
-                },
-                error: function() {
-                    alert("error!!");
-                }
-            });
-        })
-    })
-</script>

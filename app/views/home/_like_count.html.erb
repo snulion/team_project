@@ -1,0 +1,5 @@
+<% if Like.where(user_id: current_user.id, post_id: postid).empty? %>
+  <%= link_to "좋아요 #{count}명", home_like_path(post_id: postid), id: "like_#{postid}", remote: true %>
+<% else %>
+  <%= link_to "좋아요 취소 #{count}명", home_like_path(post_id: postid), id: "like_#{postid}", remote: true %>
+<% end %>

@@ -19,12 +19,20 @@ class HomeController < ApplicationController
   end
   
   def like
-    like_user = params[:like_user]
+    like_user = current_user.id
     post_id = params[:post_id]
-    likeit = Like.new(user_id: like_user, post_id: post_id)
-    likeit.save
     
-    redirect_to :back
+    isnil = Like.where(user_id: current_user.id, post_id: post_id)
+    
+    if isnil.empty?
+      likeit = Like.new(user_id: like_user, post_id: post_id)
+      likeit.save
+    else
+      isnil.take.destroy
+    end
+    
+    @count = Post.find(post_id).members.count
+    @post_id = post_id
   end
   
   def recorder
@@ -34,7 +42,8 @@ class HomeController < ApplicationController
     if user_signed_in?
       post_id = params[:id]
       @show = Post.where(id: post_id)
-      @comment = @show.take.comments.reverse
+      @show_one = @show.take
+      @count = @show.take.members.count
     else
       redirect_to "/users/sign_in"
     end
@@ -48,10 +57,6 @@ class HomeController < ApplicationController
     reply = Comment.new(title: title, content: content, post_id: postid, writer: current_user.email)
     reply.save
     
-    respond_to do |format|
-      format.js
-    end
-    
-    # redirect_to :back
+    redirect_to :back
   end
 end
