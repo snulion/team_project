@@ -18,10 +18,6 @@ class HomeController < ApplicationController
     redirect_to :back
   end
   
-  def comments
-    
-  end
-  
   def like
     like_user = params[:like_user]
     post_id = params[:post_id]
@@ -30,6 +26,27 @@ class HomeController < ApplicationController
     
     redirect_to :back
   end
+  
   def recorder
+  end
+  
+  def show        # 각각의 POST 상세 보기
+    if user_signed_in?
+      post_id = params[:id]
+      @show = Post.where(id: post_id)
+    else
+      redirect_to "/users/sign_in"
+    end
+  end
+  
+  def comment     # Comment 기능 구현
+    title = params[:title]
+    content = params[:content]
+    postid = params[:postid]
+    
+    reply = Comment.new(title: title, content: content, post_id: postid, writer: current_user.email)
+    reply.save
+    
+    redirect_to :back
   end
 end
