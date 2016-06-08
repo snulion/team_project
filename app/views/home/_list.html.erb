@@ -5,16 +5,39 @@
             <div class="card">
                 <div class="card-image">
                     <img src=<%= asset_path("hiphop.png") %>>
+                    <input type="hidden" id="post_id" name="post_id" value="<%= p.id %>"/>
                     <span class="card-title"><%= p.genre %></span>
+                    <span class="card-date"><%=p.created_at.in_time_zone("Asia/Seoul").strftime("%Y년%m월%d일 %H시%M분") %></span>
                 </div>
                 <div class="card-content">
                     <p><%= p.content %></p>
                 </div>
                 <div class="card-action">
                     <a href="#">This is a link</a>
+                    <p class="card-difficulty">☆☆☆★★</p>
+                    <p class="card-like">좋아요</p>
                 </div>
             </div>
         </div>
         <% end %>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $(document).on("click", ".card-like", function() {
+            var postid = $("#post_id").val();
+            $.ajax({
+                method: "POST",
+                url: "/home/like",
+                data: { like_user: "1", post_id: postid },
+                success: function(data) {
+                    alert("success!!")
+                },
+                error: function() {
+                    alert("error!!");
+                }
+            });
+        })
+    })
+</script>

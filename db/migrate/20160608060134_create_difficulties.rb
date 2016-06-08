@@ -4,6 +4,7 @@ class CreateDifficulties < ActiveRecord::Migration
       
       t.integer :user_id        # User-Difficulty-Post M:N
       t.integer :post_id
+      t.integer :score
       
       t.timestamps null: false
     end

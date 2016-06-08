@@ -17,3 +17,35 @@ $primary-color: color("blue", "lighten-2") !default;
  *= require_tree .
  *= require_self
  */
+
+.card-date {
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+}
+
+.card-like {
+    color: #64B5F6;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-bottom: 5px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+.card-like:hover {
+    color: blue;
+}
+
+.card-difficulty {
+    color: #64B5F6;
+    position: absolute;
+    bottom: 0;
+    right: 80px;
+    margin-right: 20px;
+    padding-bottom: 7px;
+    padding-right: 20px;
+}
