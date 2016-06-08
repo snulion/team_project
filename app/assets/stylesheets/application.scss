@@ -18,6 +18,16 @@ $primary-color: color("blue", "lighten-2") !default;
  *= require_self
  */
 
+.whoislogin {
+    color: #fff;
+    position: absolute;
+    top: 11px;
+    left: 230px;
+    height: 30px;
+    width: 300px;
+    margin: 0;
+}
+
 .card-date {
     color: #fff;
     position: absolute;
