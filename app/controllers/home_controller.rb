@@ -1,6 +1,23 @@
 class HomeController < ApplicationController
   def index
-    @posts = Post.all.reverse
+    if user_signed_in?
+      @posts = Post.all.reverse
+    else
+      redirect_to "/users/sign_in"
+    end
+  end
+  
+  def post
+    post_genre = params[:genre]
+    post_content = params[:content]
+    post_file = params[:file]
+    
+    new_post = Post.new(genre: post_genre, content: post_content, file_name: post_file)
+    new_post.save
+  end
+  
+  def comments
+    
   end
   
   def like
