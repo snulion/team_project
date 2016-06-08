@@ -5,4 +5,6 @@ class HomeController < ApplicationController
 
   def list
   end
+  def recorder
+  end
 end
