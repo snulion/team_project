@@ -1,30 +1,27 @@
-  <div class="row">
-    <form class="col s12" method="POST" action="/home/post" enctype="multipart/form-data">
+<div class="row">
+  <form class="col s12" method="POST" action="/home/post" enctype="multipart/form-data">
+    <div class="row">
+        <label>장르</label>
+         <select class="browser-default" name="genre">
+           <option value="" disabled selected>장르를 고르세요</option>
+           <option value="HipHop">힙합</option>
+           <option value="PanSori">판소리</option>
+           <option value="R&B">알엔비</option>
+         </select>
+
       <div class="row">
-          <label>장르</label>
-           <select class="browser-default" name="genre">
-             <option value="" disabled selected>장르를 고르세요</option>
-             <option value="1">힙합</option>
-             <option value="2">판소리</option>
-             <option value="3">알엔디</option>
-           </select>
-
-        <div class="row">
-            <div class="input-field col s12">
-              <textarea id="textarea1" class="materialize-textarea" name="content"></textarea>
-              <label for="textarea1">궁금해! 허밍허밍!</label>
-            </div>
-        </div>
+          <div class="input-field col s12">
+            <textarea id="textarea1" class="materialize-textarea" name="content"></textarea>
+            <label for="textarea1">궁금해! 허밍허밍!</label>
+          </div>
       </div>
+    </div>
 
-        <div class="file-field input-field">
-          <div class="btn">
-            <span>File</span>
-          </div>
-          <div class="file-path-wrapper">
-            <input class="file-path validate" type="text">
-          </div>
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>File</span>
         </div>
+<<<<<<< HEAD
       <button class="btn waves-effect waves-light" type="submit" name="action">
         Submit
       </button>
@@ -34,3 +31,16 @@
 
     <%= render :partial => "recorder" %>
   </div>
+=======
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+    <button class="btn waves-effect waves-light" type="submit" name="action">
+      Submit
+    </button>
+  </form>
+  <%= render :partial => "list" %>
+  <%= render :partial => "recorder" %>
+</div>
+>>>>>>> 6b1a1cffdcdaf441aa193a8cbf8d8791a452f4ee

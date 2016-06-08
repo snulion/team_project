@@ -12,8 +12,10 @@ class HomeController < ApplicationController
     post_content = params[:content]
     post_file = params[:file]
     
-    new_post = Post.new(genre: post_genre, content: post_content, file_name: post_file)
+    new_post = Post.new(genre: post_genre, content: post_content, file_name: post_file, user_id: current_user.id )
     new_post.save
+    
+    redirect_to :back
   end
   
   def comments
