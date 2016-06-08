@@ -11,4 +11,6 @@ class HomeController < ApplicationController
     
     redirect_to :back
   end
+  def recorder
+  end
 end
