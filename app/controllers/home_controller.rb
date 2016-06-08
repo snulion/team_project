@@ -39,6 +39,7 @@ class HomeController < ApplicationController
     if user_signed_in?
       post_id = params[:id]
       @show = Post.where(id: post_id)
+      @comment = @show.take.comments.reverse
     else
       redirect_to "/users/sign_in"
     end
@@ -58,7 +59,9 @@ class HomeController < ApplicationController
     @orange = page.css('a.trackInfo')[0]['href']
 
 
+    respond_to do |format|
+      format.js
+    end
 
-    redirect_to :back
   end
 end
