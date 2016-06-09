@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'home/show/:id' => 'home#show'
   get 'home/like'
+  get 'home/nokogiri'
   
   post 'home/post'
   post 'home/comment'

@@ -63,12 +63,19 @@ class HomeController < ApplicationController
     
     # Ajax로 넘기기 위한 변수
     @show_one = Post.where(id: postid).take
-
+  end
+  
+  def nokogiri
+    songid = params[:song_id]
+    title = Comment.find(songid).title
+    
     ko = URI::encode("#{title}")
     page = Nokogiri::HTML(open('http://search.bugs.co.kr/track?q='+ ko).read , nil, 'utf-8')
     
     if page.css('a.trackInfo')[0] != nil
-      @orange = page.css('a.trackInfo')[0]['href']
+      @nokogiri = page.css('a.trackInfo')[0]['href']
+    else  
+      @nokogiri = "검색 결과 없음"
     end
   end
 end

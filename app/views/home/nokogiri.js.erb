@@ -1,0 +1,7 @@
+$("#modal").html(
+  "<%= escape_javascript(render partial: 'home/nokogiri', locals: { nokogiri: @nokogiri }) %>"
+);
+
+$(document).ready(function(){
+  $("#modal").openModal();
+});
