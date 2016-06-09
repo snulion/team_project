@@ -26,16 +26,16 @@ class HomeController < ApplicationController
   def like
     like_user = current_user.id
     post_id = params[:post_id]
-    
+
     isnil = Like.where(user_id: current_user.id, post_id: post_id)
-    
+
     if isnil.empty?
       likeit = Like.new(user_id: like_user, post_id: post_id)
       likeit.save
     else
       isnil.take.destroy
     end
-    
+
     @count = Post.find(post_id).members.count
     @post_id = post_id
   end
@@ -60,22 +60,32 @@ class HomeController < ApplicationController
 
     reply = Comment.new(title: title, content: content, post_id: postid, writer: current_user.email)
     reply.save
-    
+
     # Ajax로 넘기기 위한 변수
     @show_one = Post.where(id: postid).take
   end
-  
+
   def nokogiri
     songid = params[:song_id]
-    title = Comment.find(songid).title
-    
-    ko = URI::encode("#{title}")
+    @title = Comment.find(songid).title
+
+    ko = URI::encode("#{@title}")
     page = Nokogiri::HTML(open('http://search.bugs.co.kr/track?q='+ ko).read , nil, 'utf-8')
-    
+
+
     if page.css('a.trackInfo')[0] != nil
       @nokogiri = page.css('a.trackInfo')[0]['href']
-    else  
-      @nokogiri = "검색 결과 없음"
+
+      new_page = Nokogiri::HTML(open("#{@nokogiri}").read , nil, 'utf-8')
+
+        @lylic = new_page.css('div.lyricsContainer').css('p').to_s.html_safe
+        @thumnail = new_page.css('img')[0]['src']
+
+    else
+        @nokogiri = "검색 결과 없음"
     end
+
+
+
   end
 end

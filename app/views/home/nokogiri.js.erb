@@ -1,5 +1,5 @@
 $("#modal").html(
-  "<%= escape_javascript(render partial: 'home/nokogiri', locals: { nokogiri: @nokogiri }) %>"
+  "<%= escape_javascript(render partial: 'home/nokogiri', locals: { nokogiri: @nokogiri, lylic: @lylic, thumnail: @thumnail }) %>"
 );
 
 $(document).ready(function(){
