@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
-
+gem 'figaro'
+gem 'carrierwave'
+gem 'fog-aws'
 gem 'devise'
 gem 'nokogiri'
 gem 'materialize-sass'

@@ -15,9 +15,12 @@ class HomeController < ApplicationController
   def post
     post_genre = params[:genre]
     post_content = params[:content]
-    post_file = params[:file]
-
-    new_post = Post.new(genre: post_genre, content: post_content, file_name: post_file, user_id: current_user.id )
+    post_file = params[:file_name]
+    
+    uploader = UploadUploader.new
+    uploader.store!(post_file)
+    
+    new_post = Post.new(genre: post_genre, content: post_content, file_name: uploader.url, user_id: current_user.id )
     new_post.save
 
     redirect_to :back
