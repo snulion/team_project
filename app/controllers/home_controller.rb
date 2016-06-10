@@ -100,6 +100,20 @@ class HomeController < ApplicationController
     # Ajax로 넘기기 위한 변수
     @show_one = Post.where(id: postid).take
   end
+  
+  def correctcomment
+    @commmentid = params[:id]
+    @commenttitle = Comment.find(@commentid).title
+    @commentcontent = Comment.find(@commentid).content
+  end
+  
+  def correctcommentprocess
+    
+  end
+  
+  def deletecomment
+    
+  end
 
   def nokogiri
     songid = params[:song_id]
