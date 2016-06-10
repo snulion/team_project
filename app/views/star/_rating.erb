@@ -1,0 +1,11 @@
+<%= form_tag(star_rating_path(s.id), method: "POST", remote: true) do %>
+  <div class="input-field col s12">
+    <p class="range-field">
+    <input type="range" id="test5" min="0" max="100" name="rating" />
+    </p>
+  </div>
+
+  <%= button_tag 'Submit', class: 'btn waves-effect waves-light' %>
+
+<% end %>
+
