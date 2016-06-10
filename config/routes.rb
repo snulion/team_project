@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   get 'home/nokogiri'
   get 'home/delete/:id' => 'home#delete'
   get 'home/correct/:id' => 'home#correct', as: :home_correct
+  get 'home/correctcomment/:id' => 'home#correctcomment', as: :home_correctcomment
+  get 'home/correctcommentprocess/:id' => 'home#correctcommentprocess'
+  get 'home/deletecomment/:id' => 'home#deletecomment', as: :home_deletecomment
   
   post 'home/post'
   post 'home/comment'
