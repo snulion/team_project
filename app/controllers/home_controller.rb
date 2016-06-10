@@ -2,13 +2,10 @@ require 'nokogiri'
 require 'open-uri'
 
 class HomeController < ApplicationController
-  def index
-    if user_signed_in?
-      @posts = Post.all.reverse
-    else
-      redirect_to "/users/sign_in"
-    end
+  before_action :authenticate_user!
 
+  def index
+    @posts = Post.all.reverse
   end
 
   def post

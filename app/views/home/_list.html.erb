@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <% @posts.each do |p| %>
+    <% posts.each do |p| %>
     <div class="col s12 m6">
       <div class="card">
         <div class="card-image" style="cursor:pointer" onclick="location.href='/home/show/<%= p.id %>'">
@@ -24,7 +24,8 @@
           <% else %>
             <%= link_to "좋아요 취소 #{p.members.count}명", home_like_path(post_id: p.id), id: "like_#{p.id}", remote: true %>
           <% end %>
-          <p class="card-difficulty">☆☆☆★★</p>
+          <p class="card-difficulty">
+          </p>
         </div>
       </div>
     </div>

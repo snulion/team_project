@@ -21,6 +21,6 @@
       Submit
     </button>
   </form>
-  <%= render :partial => "list" %>
+  <%= render :partial => "list", locals: {posts: @posts} %>
   <%= render :partial => "recorder" %>
 </div>
