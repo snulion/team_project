@@ -2,13 +2,10 @@ require 'nokogiri'
 require 'open-uri'
 
 class HomeController < ApplicationController
+  before_action :authenticate_user!
+  
   def index
-    if user_signed_in?
-      @posts = Post.all.reverse
-    else
-      redirect_to "/users/sign_in"
-    end
-
+    @posts = Post.all.reverse
   end
 
   def post
@@ -70,7 +67,7 @@ class HomeController < ApplicationController
   end
   
   def correct
-    postid = params[:id]
+    postid = params[:id].to_i
     userid = current_user.id
     writerid = Post.find(postid).user.id
     
@@ -79,7 +76,7 @@ class HomeController < ApplicationController
   end
   
   def correct_process
-    postid = params[:id]
+    postid = params[:id].to_i
     content = params[:content]
     
     correct_post = Post.find(postid)
@@ -92,7 +89,7 @@ class HomeController < ApplicationController
   def comment     # Comment 기능 구현
     title = params[:title]
     content = params[:content]
-    postid = params[:postid]
+    postid = params[:postid].to_i
 
     reply = Comment.new(title: title, content: content, post_id: postid, writer: current_user.email)
     reply.save
@@ -101,22 +98,40 @@ class HomeController < ApplicationController
     @show_one = Post.where(id: postid).take
   end
   
-  def correctcomment
-    @commmentid = params[:id]
-    @commenttitle = Comment.find(@commentid).title
-    @commentcontent = Comment.find(@commentid).content
+  def correct_comment
+    @c_id = params[:id].to_i
+    @c_title = Comment.find(@c_id).title
+    @c_content = Comment.find(@c_id).content
   end
   
-  def correctcommentprocess
+  def correct_comment_process
+    @c_id = params[:id].to_i
+    @c_title = params[:title]
+    @c_content = params[:content]
     
+    correct_comment = Comment.find(@c_id)
+    correct_comment.title = @c_title
+    correct_comment.content = @c_content
+    correct_comment.save
+    
+    @c_date = Comment.find(@c_id).updated_at
   end
   
-  def deletecomment
+  def delete_comment
+    @c_id = params[:id].to_i
     
+    d_comment = Comment.find(@c_id)
+    d_comment.published = false
+    d_comment.save
+    
+    postid = d_comment.post.id
+    @show_one = Post.where(id: postid).take
+    
+    render template: 'home/comment'
   end
 
   def nokogiri
-    songid = params[:song_id]
+    songid = params[:song_id].to_i
     @title = Comment.find(songid).title
 
     ko = URI::encode("#{@title}")
@@ -128,21 +143,20 @@ class HomeController < ApplicationController
 
       new_page = Nokogiri::HTML(open("#{@nokogiri}").read , nil, 'utf-8')
 
-        @lylic = new_page.css('div.lyricsContainer').css('p').to_s.html_safe
-        @thumnail = new_page.css('img')[0]['src']
+      @lylic = new_page.css('div.lyricsContainer').css('p').to_s.html_safe
+      @thumnail = new_page.css('img')[0]['src']
 
     else
-        @nokogiri = "검색 결과 없음"
+      @nokogiri = "검색 결과 없음"
     end
   end
+  
   def rating
      rating = params[:rating]
      postid = params[:post_id]
      userid = params[:user_id]
-     
 
      jumsoo = Dfficulty.new(score: rating, user_id: userid , post_id: postid )
      jumsoo.save
   end
-
 end

@@ -1,5 +1,0 @@
-<%= form_tag("/home/correctcommentprocess/id", method: "POST", remote: true) do %>
-  <%= text_field_tag 'title', title, class: 'materialize-text' %>
-  <%= text_area_tag 'content', content, class: 'materialize-textarea' %>
-  <%= button_tag 'Submit', class: 'btn waves-effect waves-light' %>
-<% end %>

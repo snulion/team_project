@@ -1,0 +1,6 @@
+<%= link_to @c_title, home_nokogiri_path(song_id: @c_id), id: "nokogiri_#{@c_id}", remote: true %><br>
+<%= @c_content %><br>
+<%= current_user.email %><br>
+<%= @c_date.in_time_zone("Asia/Seoul").strftime("%Y년%m월%d일 %H시%M분") %>
+<%= link_to "수정", home_correct_comment_path(@c_id), class: "green-text text-accent-3", remote: true %>
+<%= link_to "삭제", home_delete_comment_path(@c_id), class: "green-text text-accent-3", remote: true %><hr>

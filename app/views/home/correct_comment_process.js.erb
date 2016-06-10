@@ -1,0 +1,3 @@
+$("#comment_<%= @c_id %>").html(
+    "<%= escape_javascript(render partial: 'home/comment_correct_process', locals: { id: @c_id, title: @c_title, content: @c_content, date: @c_date }) %>"
+);

@@ -10,14 +10,14 @@ Rails.application.routes.draw do
   get 'home/nokogiri'
   get 'home/delete/:id' => 'home#delete'
   get 'home/correct/:id' => 'home#correct', as: :home_correct
-  get 'home/correctcomment/:id' => 'home#correctcomment', as: :home_correctcomment
-  get 'home/correctcommentprocess/:id' => 'home#correctcommentprocess'
-  get 'home/deletecomment/:id' => 'home#deletecomment', as: :home_deletecomment
+  get 'home/correct_comment/:id' => 'home#correct_comment', as: :home_correct_comment
+  get 'home/delete_comment/:id' => 'home#delete_comment', as: :home_delete_comment
   
   post 'home/post'
   post 'home/comment'
   post 'home/correct_process/:id' => 'home#correct_process'
   post 'home/rating/:id' => 'home#rating'
+  post 'home/correct_comment_process/:id' => 'home#correct_comment_process', as: :home_correct_comment_process
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
