@@ -8,9 +8,12 @@ Rails.application.routes.draw do
   get 'home/show/:id' => 'home#show'
   get 'home/like'
   get 'home/nokogiri'
+  get 'home/delete/:id' => 'home#delete'
+  get 'home/correct/:id' => 'home#correct', as: :home_correct
   
   post 'home/post'
   post 'home/comment'
+  post 'home/correct_process/:id' => 'home#correct_process'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

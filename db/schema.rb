@@ -41,9 +41,10 @@ ActiveRecord::Schema.define(version: 20160608085815) do
     t.string   "genre"
     t.text     "content"
     t.string   "file_name",  default: ""
+    t.boolean  "published",  default: true
     t.integer  "user_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "users", force: :cascade do |t|

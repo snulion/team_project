@@ -1,7 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
 
-
 class HomeController < ApplicationController
   def index
     if user_signed_in?
@@ -55,6 +54,40 @@ class HomeController < ApplicationController
       redirect_to "/users/sign_in"
     end
   end
+  
+  def delete
+    postid = params[:id]
+    userid = current_user.id
+    writerid = Post.find(postid).user.id
+    
+    if userid == writerid
+      delete_post = Post.find(postid)
+      delete_post.published = false
+      delete_post.save
+    end
+    
+    redirect_to "/"
+  end
+  
+  def correct
+    postid = params[:id]
+    userid = current_user.id
+    writerid = Post.find(postid).user.id
+    
+    @show = Post.where(id: postid)
+    @count = @show.take.members.count
+  end
+  
+  def correct_process
+    postid = params[:id]
+    content = params[:content]
+    
+    correct_post = Post.find(postid)
+    correct_post.content = content
+    correct_post.save
+    
+    redirect_to "/home/show/#{postid}"
+  end
 
   def comment     # Comment 기능 구현
     title = params[:title]
@@ -87,8 +120,5 @@ class HomeController < ApplicationController
     else
         @nokogiri = "검색 결과 없음"
     end
-
-
-
   end
 end

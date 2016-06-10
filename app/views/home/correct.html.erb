@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12 m6">
+      <% @show.each do |s| %>
+      <div class="card">
+        <div class="card-image">
+          <img src=<%= asset_path("hiphop.png") %>>
+          <span class="card-title"><%= s.genre %></span>
+          <span class="card-date"><%= s.created_at.in_time_zone("Asia/Seoul").strftime("%Y년%m월%d일 %H시%M분") %></span>
+        </div>
+        <div class="card-content">
+          <%= form_tag("/home/correct_process/#{s.id}", method: "POST") do %>
+            <%= text_area_tag 'content', s.content, class: 'materialize-textarea' %>
+            <%= button_tag 'Finish', class: 'btn waves-effect waves-light' %>
+          <% end %>
+        </div>
+        <div class="card-action">
+          <p class="card-difficulty">☆☆☆★★</p>
+          <!-- "home_like_path() : route.rb에 먼저 경로가 지정되어 있어야 한다. -->
+          <!-- 좋아요를 이미 눌렀다면 "좋아요 취소 n명"으로 나타난다. -->
+          <% if Like.where(user_id: current_user.id, post_id: s.id).empty? %>
+            <%= link_to "좋아요 #{@count}명", home_like_path(post_id: s.id), id: "like_#{s.id}", remote: true %>
+          <% else %>
+            <%= link_to "좋아요 취소 #{@count}명", home_like_path(post_id: s.id), id: "like_#{s.id}", remote: true %>
+          <% end %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,7 @@ class CreatePosts < ActiveRecord::Migration
       t.string  :genre
       t.text    :content
       t.string  :file_name, default: ""
+      t.boolean :published, default: true
       t.integer :user_id
       
       t.timestamps null: false

@@ -8,4 +8,8 @@ class Post < ActiveRecord::Base
     
     has_many :difficulties
     has_many :persons, through: :difficulties, class_name: :User        # User-Difficult-Post M:N
+
+    def self.default_scope
+      where published: true
+    end
 end

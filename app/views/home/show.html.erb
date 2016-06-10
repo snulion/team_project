@@ -9,7 +9,7 @@
           <span class="card-date"><%= s.created_at.in_time_zone("Asia/Seoul").strftime("%Y년%m월%d일 %H시%M분") %></span>
         </div>
         <div class="card-content">
-          <p><%= s.content %></p>
+          <p><%= s.content.gsub "\r\n", "<br>" %></p>
         </div>
         <div class="card-action">
           <p class="card-difficulty">☆☆☆★★</p>
@@ -27,6 +27,13 @@
             <%= text_field_tag 'title', nil, class: 'materialize-text', placeholder: '곡 제목' %>
             <%= text_area_tag 'content', nil,  class: 'materialize-textarea', placeholder: '자세한 설명을 적어주세요.' %>
             <%= button_tag 'Submit', class: 'btn waves-effect waves-light' %>
+            <% if current_user.id == s.user.id %>
+              <%= button_tag 'Correct', type: 'button', class:'btn waves-effect waves-light amber accent-4', onclick: "location.href = '/home/correct/#{s.id}'" %>
+              <%= button_tag 'Delete', type: 'button', class:'btn waves-effect waves-light red', onclick: "location.href = '/home/delete/#{s.id}'" %>
+            <% else %>
+              <%= button_tag 'Correct', type: 'button', class:'btn waves-effect waves-light amber accent-4', onclick: "location.href = '/home/correct/#{s.id}'", disabled: true %>
+              <%= button_tag 'Delete', type: 'button', class:'btn waves-effect waves-light red', onclick: "location.href = '/home/delete/#{s.id}'", disabled: true %>
+            <% end %>
           <% end %>
         </div>
         <div id="comment" class="card-content">

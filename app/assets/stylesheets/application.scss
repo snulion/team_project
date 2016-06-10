@@ -59,3 +59,9 @@ $primary-color: color("blue", "lighten-2") !default;
     padding-bottom: 7px;
     padding-right: 20px;
 }
+
+.delete-btn {
+    position: relative;
+    top : -36px;
+    left : 130px;
+}
