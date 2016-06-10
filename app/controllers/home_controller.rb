@@ -121,4 +121,14 @@ class HomeController < ApplicationController
         @nokogiri = "검색 결과 없음"
     end
   end
+  def rating
+     rating = params[:rating]
+     postid = params[:post_id]
+     userid = params[:user_id]
+     
+
+     jumsoo = Dfficulty.new(score: rating, user_id: userid , post_id: postid )
+     jumsoo.save
+  end
+
 end

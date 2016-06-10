@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post 'home/post'
   post 'home/comment'
   post 'home/correct_process/:id' => 'home#correct_process'
+  post 'home/rating/:id' => 'home#rating'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
