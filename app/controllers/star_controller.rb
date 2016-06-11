@@ -10,5 +10,7 @@ class StarController < ApplicationController
      else
        @jumsoo = isnil.take.score
      end
+      
+     @avg = Post.find_by(postid).difficulties.pluck(:score).sum()/Post.find_by(postid).difficulties.pluck(:score).count
   end
 end
