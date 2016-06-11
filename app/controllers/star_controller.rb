@@ -6,4 +6,6 @@ class StarController < ApplicationController
      jumsoo.save
      @jumsoo = jumsoo.score
   end
+  def nokorigi2
+  end
 end
