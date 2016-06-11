@@ -1,26 +1,15 @@
-<div class="row">
-  <form class="col s12" method="POST" action="/home/post" enctype="multipart/form-data">
-    <div class="row">
-        <label>장르</label>
-         <select class="browser-default" name="genre">
-           <option value="" disabled selected>장르를 고르세요</option>
-           <option value="HipHop">힙합</option>
-           <option value="PanSori">판소리</option>
-           <option value="R&B">알엔비</option>
-         </select>
-
-      <div class="row">
-          <div class="input-field col s12">
-            <textarea id="textarea1" class="materialize-textarea" name="content"></textarea>
-            <label for="textarea1">궁금해! 허밍허밍!</label>
-            <input type="file" name="file_name"/>
-          </div>
+<div class="row"> <form class="col s12" method="POST" action="/home/post" enctype="multipart/form-data"> <div class="row"> <label>장르</label> <select class="browser-default" name="genre"> <option value="" disabled selected>장르를 고르세요</option> <option value="HipHop">힙합</option> <option value="PanSori">판소리</option> <option value="R&B">알엔비</option> </select> <div class="row"> <div class="input-field col s12"> <textarea id="textarea1" class="materialize-textarea" name="content"></textarea>
+          <label for="textarea1">궁금해! 허밍허밍!</label>
+          <input type="file" name="file_name"/>
+        </div>
       </div>
     </div>
     <button class="btn waves-effect waves-light" type="submit" name="action">
       Submit
     </button>
   </form>
+ 
   <%= render :partial => "list", locals: {posts: @posts} %>
   <%= render :partial => "recorder" %>
+
 </div>

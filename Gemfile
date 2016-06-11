@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'will_paginate-materialize'
 gem 'figaro'
 gem 'carrierwave'
 gem 'fog-aws'
