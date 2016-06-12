@@ -1,7 +1,9 @@
 <script src="/assets/recorder.js" type="text/javascript"></script>
 
-<button onclick="startRecording(this);">record</button>
-<button onclick="stopRecording(this);" disabled>stop</button>
+
+<button class="record-button" onclick="startRecording(this);">record</button>
+<button class="record-button" onclick="stopRecording(this);" disabled>stop</button>
+<button class="record-butoon" onclick="fileuploadready(this);">upload</button>
 
 <ul id="recordingslist"></ul>
 
@@ -13,7 +15,7 @@ var audio_context;
 var recorder;
 
 function startUserMedia(stream) {
-  var input = audio_context.createMediaStreamSource(stream);
+  var input = audio_context.createMediaStreamSource(stream);  // create MediaStreamAudioSourceNode object
   console.log('Media stream created.');
 
   // Uncomment if you want the audio to feedback directly
@@ -49,16 +51,32 @@ function createDownloadLink() {
     var li = document.createElement('li');
     var au = document.createElement('audio');
     var hf = document.createElement('a');
+    hf.setAttribute("id", "uploads");
 
     au.controls = true;
     au.src = url;
     hf.href = url;
-    hf.download = new Date().toISOString() + '.wav';
+    hf.download = new Date().toISOString() + '.wav';  // toISOString() : ISO format의 시간 반환
     hf.innerHTML = hf.download;
     li.appendChild(au);
     li.appendChild(hf);
     recordingslist.appendChild(li);
   });
+}
+
+function fileuploadready() {
+  var up = document.getElementById("uploads");
+  var up_file = FileAPI.readAsDataURL(up.href, function (evt/**Object*/){
+    if( evt.type == 'load' ){
+        // Success
+        var dataURL = evt.result;
+    } else if( evt.type =='progress' ){
+        var pr = evt.loaded/evt.total * 100;
+    } else {
+        // Error
+    }
+  });
+  $('#input_file').val(up_file);
 }
 
 $(document).ready(function() {
@@ -74,7 +92,10 @@ $(document).ready(function() {
   } catch (e) {
     alert('No web audio support in this browser!');
   }
-
+  
+  // navigator.getUserMedia : 사용자의 video, audio 기능 허용 관련
+  // navigator.getUserMedia(constraints, successCallback, errorCallback);
+  // 성공일 경우, startUserMedia 함수 실행
   navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
     console.log('No live audio input: ' + e);
   });
