@@ -1,10 +1,7 @@
 source 'https://rubygems.org'
 
-<<<<<<< HEAD
 gem 'jquery-fileapi-rails'
-=======
 gem 'will_paginate-materialize'
->>>>>>> 969e7350c290da1f2aa142e389c67cbb72bd59fa
 gem 'figaro'
 gem 'carrierwave'
 gem 'fog-aws'
