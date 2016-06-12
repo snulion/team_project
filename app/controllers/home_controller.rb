@@ -78,7 +78,6 @@ class HomeController < ApplicationController
   def correct_process
     postid = params[:id].to_i
     content = params[:content]
-    
     correct_post = Post.find(postid)
     correct_post.content = content
     correct_post.save
@@ -88,10 +87,11 @@ class HomeController < ApplicationController
 
   def comment     # Comment 기능 구현
     title = params[:title]
+    singer = params[:singer]
     content = params[:content]
     postid = params[:postid].to_i
 
-    reply = Comment.new(title: title, content: content, post_id: postid, writer: current_user.email)
+    reply = Comment.new(title: title, singer: singer, content: content, post_id: postid, writer: current_user.email)
     reply.save
 
     # Ajax로 넘기기 위한 변수
@@ -101,16 +101,19 @@ class HomeController < ApplicationController
   def correct_comment
     @c_id = params[:id].to_i
     @c_title = Comment.find(@c_id).title
+    @c_singer = Comment.find(@c_id).singer
     @c_content = Comment.find(@c_id).content
   end
   
   def correct_comment_process
     @c_id = params[:id].to_i
     @c_title = params[:title]
+    @c_singer = params[:singer]
     @c_content = params[:content]
     
     correct_comment = Comment.find(@c_id)
     correct_comment.title = @c_title
+    correct_comment.singer = @c_singer
     correct_comment.content = @c_content
     correct_comment.save
     
@@ -133,8 +136,9 @@ class HomeController < ApplicationController
   def nokogiri
     songid = params[:song_id].to_i
     @title = Comment.find(songid).title
+    @singer= Comment.find(songid).singer
 
-    ko = URI::encode("#{@title}")
+    ko = URI::encode("#{@title}  #{@singer}")
     page = Nokogiri::HTML(open('http://search.bugs.co.kr/track?q='+ ko).read , nil, 'utf-8')
 
 

@@ -28,6 +28,7 @@
           <%= form_tag("/home/comment", method: "POST", remote: true) do %>
             <%= hidden_field_tag 'postid', s.id %>
             <%= text_field_tag 'title', nil, class: 'materialize-text', placeholder: '곡 제목' %>
+            <%= text_field_tag 'singer', nil, class: 'materialize-text', placeholder: '가수명' %>
             <%= text_area_tag 'content', nil,  class: 'materialize-textarea', placeholder: '자세한 설명을 적어주세요.' %>
             <%= button_tag 'Submit', class: 'btn waves-effect waves-light' %>
             <% if current_user.id == s.user.id %>

@@ -18,6 +18,9 @@ $primary-color: color("blue", "lighten-2") !default;
  *= require_self
  */
 
+.pagination a li.active {
+    color: #fff;
+}
 .whoislogin {
     color: #fff;
     position: absolute;
