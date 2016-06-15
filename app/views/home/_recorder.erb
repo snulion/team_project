@@ -66,17 +66,8 @@ function createDownloadLink() {
 
 function fileuploadready() {
   var up = document.getElementById("uploads");
-  var up_file = FileAPI.readAsDataURL(up.href, function (evt/**Object*/){
-    if( evt.type == 'load' ){
-        // Success
-        var dataURL = evt.result;
-    } else if( evt.type =='progress' ){
-        var pr = evt.loaded/evt.total * 100;
-    } else {
-        // Error
-    }
-  });
-  $('#input_file').val(up_file);
+  var up_url = up.href;
+  window.open(up.href, "record_music");
 }
 
 $(document).ready(function() {

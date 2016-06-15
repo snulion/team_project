@@ -124,6 +124,8 @@ var Recorder = exports.Recorder = (function () {
                     interleaved = buffers[0];
                 }
                 var dataview = encodeWAV(interleaved);
+                
+                // Blob 파일 생성
                 var audioBlob = new Blob([dataview], { type: type });
 
                 self.postMessage({ command: 'exportWAV', data: audioBlob });
@@ -188,7 +190,10 @@ var Recorder = exports.Recorder = (function () {
             }
 
             function encodeWAV(samples) {
+                // ArrayBuffer : 원시 이진 데이터 버퍼, 고정된 크기의 raw binary data
                 var buffer = new ArrayBuffer(44 + samples.length * 2);
+                // DataView : ArrayBuffer에서 다양한 형태의 데이터를 읽고 쓰기 위한 저수준 인터페이스를 제공
+                // ArrayBuffer는 DataView를 이용해 내용물을 읽고 쓸 수 있다.
                 var view = new DataView(buffer);
 
                 /* RIFF identifier */
@@ -201,6 +206,8 @@ var Recorder = exports.Recorder = (function () {
                 writeString(view, 12, 'fmt ');
                 /* format chunk length */
                 view.setUint32(16, 16, true);
+                
+                
                 /* sample format (raw) */
                 view.setUint16(20, 1, true);
                 /* channel count */

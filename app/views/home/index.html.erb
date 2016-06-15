@@ -1,26 +1,159 @@
-<div class="row">
-  <form class="col s12" method="POST" action="/home/post" enctype="multipart/form-data">
-    <div class="row">
-        <label>장르</label>
-         <select class="browser-default" name="genre">
-           <option value="" disabled selected>장르를 고르세요</option>
-           <option value="HipHop">힙합</option>
-           <option value="PanSori">판소리</option>
-           <option value="R&B">알엔비</option>
-         </select>
-
+<div class="container" style="margin-top:30px;">  
+  <div class="row">
+    <form method="POST" action="/home/post" enctype="multipart/form-data">
+      <select id="genre" class="browser-default" name="genre">
+        <option value="" disabled selected>장르를 고르세요</option>
+        <option value="hiphop">힙합</option>
+        <option value="ballad">발라드</option>
+        <option value="RnB">알엔비</option>
+        <option value="rock">락</option>
+        <option value="reggae">레게</option>
+      </select>
       <div class="row">
-          <div class="input-field col s12">
-            <textarea id="textarea1" class="materialize-textarea" name="content"></textarea>
-            <label for="textarea1">궁금해! 허밍허밍!</label>
-            <input type="file" name="file_name" id="file_upload" value="01.png"/>
-          </div>
+        <div class="input-field col s12">
+          <textarea id="textarea" class="materialize-textarea" name="content"></textarea>
+          <label for="textarea">궁금한 곡에 대한 추가 설명을 적어주세요.</label>
+        </div>
+        <div class="input-field col s12">
+          <input type="file" id="fileupload" class="materialize-textarea" name="file" onchange="changemanual2();">
+        </div>
       </div>
-    </div>
-    <button class="btn waves-effect waves-light" type="submit" name="action">
-      Submit
-    </button>
-  </form>
-  <%= render :partial => "recorder" %>
-  <%= render :partial => "list", locals: {posts: @posts} %>
+      <button id="submit_btn" class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+    </form>
+  </div>
+  <table id="recordingslist">
+    <tr>
+    <td class="btn_td"><button id="startbtn" class="record-button" onclick="startRecording(this);">record</button></td>
+    <td class="btn_td"><button id="stopbtn" class="record-button" onclick="stopRecording(this);" disabled="disabled">stop</button></td>
+    <td class="audio_td"><audio id="audio" src="" controls=true style="margin:0px;"></audio></td>
+    <td class="manual_td"><p id="manual">녹을을 시작해주세요.</p></td>
+    </tr>
+    <tr>
+      <td colspan=4 id="downloadlink"></td>
+    </tr>
+  </table>
+  <pre id="log"></pre>
 </div>
+<%= render :partial => "list", locals: {posts: @posts} %>
+
+<script>
+// ajax file upload 부분
+// var audio_context;
+// var recorder;
+// var tmp_file;
+
+// $(document).on("click", "#submit_btn", function() {
+
+//   var file_src = $('audio').attr("src");
+//   var content = $("#textarea").val();
+//   var genre = $("#genre").val();
+//   var file_name = $('#uploads').attr("download");
+//   var upload_file = $('#uploads').download = file_name;
+
+//   var data = new FormData();
+//   data.append('data', upload_file);
+//   data.append('content', content);
+//   data.append('genre', genre);
+  
+//   $.ajax({
+//     method: "POST",
+//     url: "/home/post",
+//     data: data,
+//     processData: false,
+//     contentType: false,
+//     success: function() {
+//       alert("Suceess!!");
+//       window.location.reload();
+//     },
+//     error: function() {
+//       alert("Failed");
+//     }
+//   });
+// });
+
+// audio record 부분
+
+function startUserMedia(stream) {
+  var input = audio_context.createMediaStreamSource(stream);  // create MediaStreamAudioSourceNode object
+  console.log('Media stream created.');
+
+  // Uncomment if you want the audio to feedback directly
+  //input.connect(audio_context.destination);
+  //console.log('Input connected to audio context destination.');
+
+  recorder = new Recorder(input);
+  console.log('Recorder initialised.');
+}
+
+function startRecording(button) {
+  recorder && recorder.record();
+  button.disabled = true;
+  $("#stopbtn").removeAttr("disabled");
+  $("#manual").html("stop 버튼을 눌러주세요");
+  console.log('Recording...');
+}
+
+function stopRecording(button) {
+  recorder && recorder.stop();
+  button.disabled = true;
+  // 한 번 녹음 후에 다시 녹음되지 않도록 설정
+  // button.previousElementSibling.disabled = false;
+  $("#manual").html("해당 파일을 다운받아 주세요");
+  console.log('Stopped recording.');
+
+  // create WAV download link using audio data blob
+  createDownloadLink();
+  
+  recorder.clear();
+}
+
+function createDownloadLink() {
+  recorder && recorder.exportWAV(function(blob) {
+    var url = URL.createObjectURL(blob);
+    // var li = document.createElement('li');
+    var au = document.getElementById('audio');
+    var hf = document.createElement('a');
+    hf.setAttribute("id", "uploads");
+    hf.setAttribute("onclick", "changemanual();")
+
+    // au.controls = true;
+    au.src = url;
+    hf.href = url;
+    hf.download = new Date().toISOString() + '.wav';  // toISOString() : ISO format의 시간 반환
+    hf.innerHTML = hf.download;
+    // li.appendChild(au);
+    // li.appendChild(hf);
+    downloadlink.appendChild(hf);
+  });
+}
+
+function changemanual() {
+  $("#manual").html("다운 받은 파일을 선택해 주세요");
+}
+
+function changemanual2() {
+  $("#manual").html("Submit 버튼을 눌러 완료해 주세요");
+}
+
+$(document).ready(function() {
+  try {
+    // webkit shim
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+    window.URL = window.URL || window.webkitURL;
+
+    audio_context = new AudioContext;
+    console.log('Audio context set up.');
+    console.log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+  } catch (e) {
+    alert('No web audio support in this browser!');
+  }
+  
+  // navigator.getUserMedia : 사용자의 video, audio 기능 허용 관련
+  // navigator.getUserMedia(constraints, successCallback, errorCallback);
+  // 성공일 경우, startUserMedia 함수 실행
+  navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+    console.log('No live audio input: ' + e);
+  });
+});
+</script>

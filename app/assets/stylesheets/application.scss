@@ -68,3 +68,19 @@ $primary-color: color("blue", "lighten-2") !default;
     top : -36px;
     left : 130px;
 }
+
+#recordingslist {
+    width: auto;
+}
+
+#downloadlink {
+    padding: 0;
+}
+
+td {
+    padding: 5px 5px;
+}
+
+#manual {
+    font-weight: bold;
+}

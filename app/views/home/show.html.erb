@@ -4,15 +4,15 @@
       <% @show.each do |s| %>
       <div class="card">
         <div class="card-image">
-          <img src=<%= asset_path("hiphop.png") %>>
+          <img src=<%= asset_path("#{s.genre}.png") %>>
           <span class="card-title"><%= s.genre %></span>
           <span class="card-date"><%= s.created_at.in_time_zone("Asia/Seoul").strftime("%Y년%m월%d일 %H시%M분") %></span>
         </div>
         <div class="card-content">
-          <%= simple_format(s.content) %>
+          <audio controls source src="<%= s.file_name %>" type="audio/wav"></audio>
         </div>
         <div class="card-content">
-          
+          <%= simple_format(s.content) %>
         </div>
         <div class="card-action">
           <p class="card-difficulty"><span id="score">난이도는?</span><%= render partial: 'star/rating', locals: { s: s}  %><span</p>

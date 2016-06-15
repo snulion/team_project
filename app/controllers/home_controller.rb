@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
+require 'fileutils'
 
 class HomeController < ApplicationController
   before_action :authenticate_user!
@@ -11,7 +12,7 @@ class HomeController < ApplicationController
   def post
     post_genre = params[:genre]
     post_content = params[:content]
-    post_file = params[:file_name]
+    post_file = params[:file]
     
     uploader = UploadUploader.new
     uploader.store!(post_file)
@@ -21,7 +22,7 @@ class HomeController < ApplicationController
 
     redirect_to :back
   end
-
+  
   def like
     like_user = current_user.id
     post_id = params[:post_id]
