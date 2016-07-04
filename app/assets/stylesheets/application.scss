@@ -87,3 +87,9 @@ td {
 #manual {
     font-weight: bold;
 }
+
+.post_content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

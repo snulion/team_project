@@ -9,5 +9,3 @@ User.create(email: 'likelion@email.com', password: '123456789', password_confirm
 User.create(email: 'test@email.com', password: '123456789', password_confirmation: '123456789')
 User.create(email: 'test1@email.com', password: '123456789', password_confirmation: '123456789')
 User.create(email: 'test2@email.com', password: '123456789', password_confirmation: '123456789')
-Post.create(genre: 'jazz', content: 'whats song?', file_name: "", user_id: 1)
-Post.create(genre: 'hiphop', content: 'humminghumming baby??', file_name: "", user_id: 1)
